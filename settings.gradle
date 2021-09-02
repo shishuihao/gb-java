@@ -5,6 +5,7 @@ pluginManagement {
     }
 }
 rootProject.name = 'gb-java'
+include 'gb-t19056-2012'
 include 'gb-t28181-2011'
 include 'gb-t28181-2016'
 include 'gb-t38775-2020'
