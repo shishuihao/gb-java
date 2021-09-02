@@ -1,19 +1,52 @@
 plugins {
     id 'java'
+    id "io.freefair.lombok" version "5.3.0"
 }
 
-group 'cn.shishuihao'
-version '1.0-SNAPSHOT'
+allprojects {
+    group 'cn.shishuihao'
+    version '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
+    repositories {
+        maven { url "https://maven.aliyun.com/repository/public" }
+        mavenCentral()
+    }
 }
 
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: "io.freefair.lombok"
 
-test {
-    useJUnitPlatform()
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    dependencies {
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+        options.warnings = false
+        options.deprecation = true
+        options.compilerArgs += ["-parameters"]
+    }
+
+    tasks.withType(GenerateModuleMetadata) {
+        enabled = false
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    jar {
+        enabled true
+    }
 }

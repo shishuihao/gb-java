@@ -5,3 +5,5 @@ pluginManagement {
     }
 }
 rootProject.name = 'gb-java'
+include 'jt-t1356-2020'
+
